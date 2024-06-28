@@ -2,6 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+void show_message(const char *message)
+{
+	int msg_width = strlen(message) + 4;
+	int msg_height = 5;
+	int startx = (COLS - msg_width) / 2;
+	int starty = (LINES - msg_height) / 2;
+	WINDOW *msg_win = newwin(msg_height, msg_width, starty, startx);
+	box(msg_win, 0, 0);
+	mvwprintw(msg_win, 2, 2, "%s", message);
+	wrefresh(msg_win);
+	getch();
+	delwin(msg_win);
+}
+
 void print_menu(WINDOW *menu_win, int highlight, char *choices[], int n_choices,
 		int *sel_services, int *srv_status)
 {
@@ -130,20 +144,6 @@ void print_help()
 	getch();
 	delwin(help_win);
 	clear();
-}
-
-void show_message(const char *message)
-{
-	int msg_width = strlen(message) + 4;
-	int msg_height = 5;
-	int startx = (COLS - msg_width) / 2;
-	int starty = (LINES - msg_height) / 2;
-	WINDOW *msg_win = newwin(msg_height, msg_width, starty, startx);
-	box(msg_win, 0, 0);
-	mvwprintw(msg_win, 2, 2, "%s", message);
-	wrefresh(msg_win);
-	getch();
-	delwin(msg_win);
 }
 
 int main()
